@@ -5,12 +5,12 @@ session_start();
 // Controlla se la variabile di sessione login non è impostata
 if (!isset($_SESSION['login'])) {
     // Reindirizza alla pagina di login
-    header("Location: login.html");
+    header("Location: ./login/login.html");
     exit(); // Assicura che lo script si interrompa dopo il reindirizzamento
 }
 
 // Includi il file di connessione al database
-require_once "connection.php";
+require_once "./lib/connection.php";
 
 // Prendi l'ID dell'utente dalla variabile di sessione
 $user_id = $_SESSION["login"];
@@ -27,7 +27,7 @@ if ($result->num_rows > 0) {
     echo "<h2>Dati dell'utente:</h2>";
     echo "<p>Username: " . $user_data['username'] . "</p>";
     echo "<p>Email: " . $user_data['email'] . "</p>";
-    echo "    <a href='disconnessione.php'>disconnessione</a>";
+    echo "    <a href='./login/logout.php'>disconnessione</a>";
     // Aggiungi altri dati dell'utente se necessario
 } else {
     echo "Nessun dato dell'utente trovato.";
