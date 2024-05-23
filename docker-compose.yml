@@ -1,0 +1,40 @@
+services:
+  # MariaDB container
+  mariadb:
+    image: yobasystems/alpine-mariadb:latest
+    command: --skip-grant-tables --user=root
+    restart: always
+    environment:
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'yes'
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  # PHPMyAdmin container
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    depends_on:
+      - mariadb
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: ''
+    ports:
+      - "8080:80"
+
+  # Apache container with PHP
+  webserver:
+    build: .
+    restart: always
+    depends_on:
+      - mariadb
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "80:80"
+
+volumes:
+  mysql_data:
