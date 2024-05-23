@@ -1,13 +1,13 @@
 <?php
-require_once "connection.php";
+require "../lib/connection.php";
 session_start();
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $email = $_POST['email'];
+    $password = hash("sha256", $_POST['password']);
     
-    $sql = "SELECT id FROM Utente WHERE username = '$username' AND password = '$password'";
+    $sql = "SELECT id FROM Utente WHERE email = '$email' AND password = '$password'";
     $result = $conn->query($sql);
     
     if ($result->num_rows > 0) {
@@ -16,13 +16,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         $_SESSION["login"] = $user_id;
         
-        header("Location: index.php");
-        exit();
+        header("Location: ../index.php");
+        exit(); 
     } else {
         echo "Nome utente o password non validi.";
         echo "<a href='login.html'>Torna al login</a>";
     }
 }
 
-$conn->close();
-?>

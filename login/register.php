@@ -1,26 +1,23 @@
 <?php
-require_once "connection.php";
+require "../lib/connection.php";
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
     $email = $_POST['email'];
+    $password = hash("sha256", $_POST['password']);
     $nome = $_POST['nome'];
     $cognome = $_POST['cognome'];
     $eta = $_POST['eta'];
     $classe = $_POST['classe'];
-
-    $sql = "INSERT INTO Utente (username, password, email, nome, cognome, eta, classe) 
-            VALUES ('$username', '$password', '$email', '$nome', '$cognome', '$eta', '$classe')";
+    
+    $sql = "INSERT INTO Utente (email, password, nome, cognome, eta, classe) 
+            VALUES ('$email', '$password', '$nome', '$cognome', '$eta', '$classe')";
     
     if ($conn->query($sql) === TRUE) {
-        header("Location: index.php");
+        header("Location: ../index.php");
         exit();
     } else {
         echo "Errore durante la registrazione: " . $conn->error;
     }
 }
 
-$conn->close();
-?>
