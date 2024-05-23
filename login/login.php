@@ -22,5 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Nome utente o password non validi.";
         echo "<a href='login.html'>Torna al login</a>";
     }
+}else{
+    header("Location:../index.php");
 }
 

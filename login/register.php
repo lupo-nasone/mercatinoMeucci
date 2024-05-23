@@ -20,4 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Errore durante la registrazione: " . $conn->error;
     }
 }
+else{
+    header("Location:../index.php");
+}
 
