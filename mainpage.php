@@ -24,7 +24,7 @@
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
         <?php
-            $sql = "SELECT * FROM categoria";
+            $sql = "SELECT * FROM Categoria";
             $query = $conn->query($sql);
             while ($row = $query->fetch_assoc()) {
                 echo "<li class='nav-item'><a class='nav-link' href='#'>". $row['nome']. "</a></li>";
