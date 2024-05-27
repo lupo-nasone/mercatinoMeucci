@@ -1,3 +1,18 @@
+<!--
+
+
+
+
+            TODO:
+            - fixare il fatto che non funzioni il caricamento file
+            - controllo su estensioni file aggiunto
+            - bottone carica file a lato di un file già caricato non deve far
+              apparire un nuovo bottone di caricamento file sul click
+
+
+
+
+-->
 <!DOCTYPE html>
 <html lang="it">
 
@@ -14,8 +29,8 @@
             newFileInput.onchange = addFileInput;
             fileInputContainer.appendChild(newFileInput);
         }
-        window.onload = function () {
-            addFileInput(); // Add the initial file input
+        window.onload = () => {
+            addFileInput();
         }
     </script>
     <link rel="stylesheet" href="./css/style.css">
@@ -26,9 +41,10 @@
 <body>
 
     <div class="card position-relative position-absolute top-50 start-50 translate-middle p-3 bg-white bg-opacity-50" style="width: 18rem;">
+        <a href="../index.php"><- torna indietro</a><br>
         <img src="./images/y8i8nhc6rg571.png" class="card-img-top" style="border-radius: 10rem;">
-        <br>
-        <p class="fw-semibold text-center">(Langone non fa niente)</p>
+        <hr>
+        <p class="fw-semibold text-center">Aggiungi annuncio</p>
         <div class="card-body">
             <form method="post" action="aggiungi.php" enctype="multipart/form-data">
 
@@ -45,11 +61,11 @@
                     <?php
                     require_once "../lib/connection.php";
 
-                    // Query per ottenere le tipologie
+                    
                     $sql = "SELECT nome FROM Categoria";
                     $result = $conn->query($sql);
 
-                    // Popola il menu a tendina
+                    
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                             echo "<option value='" . $row["nome"] . " ' class='form-select' aria-label='Default select example'>" . $row["nome"] . "</option>";
@@ -57,7 +73,7 @@
                     } else {
                         echo "<option value='' class='form-select' aria-label='Default select example'>Nessuna tipologia disponibile</option>";
                     }
-                    // Chiude la connessione
+                    
                     $conn->close();
                     ?>
                 </select><br><br>

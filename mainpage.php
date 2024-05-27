@@ -1,3 +1,22 @@
+<?php 
+  session_start();
+  if(!isset($_SESSION["login"])){
+    header("Location: index.php");
+  }
+?>
+<!--
+
+
+
+        TODO:
+        - bottone su ogni annuncio per fare una proposta
+        - bottone account per gestire account (cambia foto profilo, logout) (richiederà pagina account [se abbiamo intenzione di fare una cosa de genere {se abbiamo tempo}]);
+        - carousel delle immagini di annuncio
+
+
+
+
+-->
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -28,6 +47,11 @@
             }
         ?>
       </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+          <a style="color:black; text-decoration:none" href="./addannuncio/aggiungiAnnuncio.php">+ Crea Annuncio</a>
+        </button>
+      </form>
     </div>
   </div>
 </nav>

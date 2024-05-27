@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $descrizione = $_POST['descrizione'];
     $tipologia = $_POST['tipologia'];
 
-    $utente_id = 1;
+    $utente_id = 1; //non dovrebbe essere $_SESSION["login"] ?
 
     $conn->begin_transaction();
 
