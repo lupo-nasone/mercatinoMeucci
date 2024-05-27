@@ -1,14 +1,13 @@
 <?php
-// Parametri di connessione al database
-$servername = "localhost"; // Modifica con il nome del server del tuo database
-$username = "root"; // Modifica con il tuo nome utente del database
-$password = ""; // Modifica con la tua password del database
-$dbname = "my_faginali5cia"; // Modifica con il nome del tuo database
+$servername = "mariadb";
+$username = "root";
+$password = "";
+$dbname = "mercatino";
 
-// Connessione al database
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verifica della connessione
+
 if ($conn->connect_error) {
     die("Connessione al database fallita: " . $conn->connect_error);
 }
