@@ -1,5 +1,14 @@
+<!--
+
+
+        TODO:
+        - don't display carousel arrows when there's only 1 image
+
+
+-->
+
 <?php
-require_once "./lib/connection.php";
+require "./lib/connection.php";
 
 $categoria_filtrata = isset($_GET['categoria']) ? (int)$_GET['categoria'] : 0;
 
@@ -40,7 +49,7 @@ if ($result->num_rows > 0) {
                         while ($row_image = $result_images->fetch_assoc()) {
                             echo "
                             <div class='carousel-item $active'>
-                                <img src='/addannuncio/uploads/" . htmlspecialchars(basename($row_image['url'])) . "' class='d-block w-100' alt='...'>
+                                <img src='./addannuncio/uploads/" . htmlspecialchars(basename($row_image['url'])) . "' class='d-block w-100' alt='...'>
                             </div>";
                             $active = '';
                         }

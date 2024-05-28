@@ -1,5 +1,5 @@
 <?php
-$servername = "mariadb";
+$servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "mercatino";
