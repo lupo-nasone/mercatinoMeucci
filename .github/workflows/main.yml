@@ -16,3 +16,4 @@ jobs:
         protocol: ftp
         username: faginali5cia
         password: ${{ secrets.ftp_password }}
+        dangerous-clean-slate: true
