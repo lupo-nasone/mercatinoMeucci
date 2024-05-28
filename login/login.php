@@ -23,6 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<a href='login.html'>Torna al login</a>";
     }
 }else{
-    header("Location:../index.php");
+    header("Location:../index.php"); 
 }
 
