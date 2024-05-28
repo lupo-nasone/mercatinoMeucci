@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $annuncio_id = $stmt->insert_id;
 
         if (!empty($_FILES['file']['name'][0])) {
-            $uploadsDir = __DIR__ . '/uploads/';
+            $uploadsDir = './uploads/';
             foreach ($_FILES['file']['tmp_name'] as $key => $tmpName) {
                 $fileName = $_FILES['file']['name'][$key];
                 $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
