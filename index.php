@@ -17,6 +17,3 @@ if ($result->num_rows > 0) {
     echo "Nessun dato dell'utente trovato.";
     echo "<a href='login/login.html'>Torna indietro</a>";
 }
-
-
-

@@ -22,11 +22,12 @@
     <title>Login</title>
     <script>
         function addFileInput() {
-            const fileInputContainer = document.getElementById('fileInputContainer');
             const newFileInput = document.createElement('input');
             newFileInput.type = 'file';
             newFileInput.name = 'file[]';
             newFileInput.onchange = addFileInput;
+
+            const fileInputContainer = document.getElementById('fileInputContainer');
             fileInputContainer.appendChild(newFileInput);
         }
         window.onload = () => {
@@ -79,7 +80,7 @@
                 </select><br><br>
 
                 <div class="text-center pt-1">
-                    <div id="fileInputContainer"></div>
+                    <div id="fileInputContainer"></div><!--upload file-->
                     <br>
                     <button data-mdb-button-init data-mdb-ripple-init
                         class="btn btn-dark btn-lg btn-block text-black bg-white" type="submit"

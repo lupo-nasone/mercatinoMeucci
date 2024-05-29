@@ -6,7 +6,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $descrizione = $_POST['descrizione'];
     $tipologia = $_POST['tipologia'];
 
-    $utente_id = 1; //non dovrebbe essere $_SESSION["login"] ?
+    
+    session_start();
+    $utente_id = $_SESSION["login"];
 
     $conn->begin_transaction();
 
@@ -28,12 +30,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $stmt = $conn->prepare("INSERT INTO Foto (url, Annuncio_id) VALUES (?, ?)");
                     $stmt->bind_param("si", $targetPath, $annuncio_id);
                     $stmt->execute();
+                    $conn->commit();
+                    echo "Annuncio aggiunto con successo!";
+                } else {
+                    echo "Error: file upload fail";
                 }
             }
         }
 
-        $conn->commit();
-        echo "Annuncio aggiunto con successo!";
+        
     } catch (Exception $e) {
         $conn->rollback();
         echo "Errore: " . $e->getMessage();
