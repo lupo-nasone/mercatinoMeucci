@@ -51,12 +51,12 @@ unset($_SESSION["MSG_good"]);
         </ul>
         <form class="form-inline my-2 my-lg-0">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-            <a style="color:black; text-decoration:none" href="../addannuncio/aggiungiAnnuncio.php">+ Crea Annuncio</a>
+            <a style="color:black; text-decoration:none" href="./addannuncio/aggiungiAnnuncio.php">+ Crea Annuncio</a>
           </button>
         </form>
         <div class="form-inline my-2 my-lg-0 ms-3">
           <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">
-            <a style="color:black; text-decoration:none" href="../login/logout.php">Logout</a>
+            <a style="color:black; text-decoration:none" href="./login/logout.php">Logout</a>
           </button>
           <br>
 
