@@ -13,13 +13,13 @@ require "./lib/connection.php";
 $categoria_filtrata = isset($_GET['categoria']) ? (int)$_GET['categoria'] : 0;
 
 if ($categoria_filtrata > 0) {
-    $sql = "SELECT Annuncio.id, Annuncio.titolo, Annuncio.descrizione, Categoria.nome as categoria, Utente.nome as utente_nome, Utente.cognome as utente_cognome 
+    $sql = "SELECT Annuncio.id , Annuncio.titolo, Annuncio.descrizione, Categoria.nome as categoria, Utente.nome as utente_nome, Utente.cognome as utente_cognome
             FROM Annuncio
             JOIN Categoria ON Annuncio.Categoria_id = Categoria.id
             JOIN Utente ON Annuncio.Utente_id = Utente.id
             WHERE Categoria.id = $categoria_filtrata";
 } else {
-    $sql = "SELECT Annuncio.id, Annuncio.titolo, Annuncio.descrizione, Categoria.nome as categoria, Utente.nome as utente_nome, Utente.cognome as utente_cognome 
+    $sql = "SELECT Annuncio.id , Annuncio.titolo, Annuncio.descrizione, Categoria.nome as categoria, Utente.nome as utente_nome, Utente.cognome as utente_cognome
             FROM Annuncio
             JOIN Categoria ON Annuncio.Categoria_id = Categoria.id
             JOIN Utente ON Annuncio.Utente_id = Utente.id";
@@ -35,6 +35,7 @@ if ($result->num_rows > 0) {
         }
         
         $annuncio_id = $row['id'];
+        // echo $annuncio_id; <-- used to test
         echo "
         <div class='col-md-4 mb-4'>
             <div class='card'>
@@ -47,6 +48,7 @@ if ($result->num_rows > 0) {
                     if ($result_images->num_rows > 0) {
                         $active = 'active';
                         while ($row_image = $result_images->fetch_assoc()) {
+                            echo "url foto : " . $row_image['url'];
                             echo "
                             <div class='carousel-item $active'>
                                 <img src='./addannuncio/uploads/" . htmlspecialchars(basename($row_image['url'])) . "' class='d-block w-100' alt='...'>
