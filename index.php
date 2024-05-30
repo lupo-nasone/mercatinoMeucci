@@ -14,6 +14,5 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     header("Location: mainpage.php");
 } else {
-    echo "Nessun dato dell'utente trovato.";
-    echo "<a href='login/login.html'>Torna indietro</a>";
+    header("Location: ./login/login.html");
 }

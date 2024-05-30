@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!--
 
 
@@ -82,6 +85,7 @@
                 <div class="text-center pt-1">
                     <div id="fileInputContainer"></div><!--upload file-->
                     <br>
+                    <p class="<?php echo isset($_SESSION["MSG_good"]) ? $_SESSION["MSG_good"] ? "alert alert-success" : "alert alert-danger" : "" ?>"><?php echo isset($_SESSION["MSG"]) ? $_SESSION["MSG"] : "" ?></p>
                     <button data-mdb-button-init data-mdb-ripple-init
                         class="btn btn-dark btn-lg btn-block text-black bg-white" type="submit"
                         value="aggiungi">Aggiungi</button>

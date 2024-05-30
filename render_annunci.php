@@ -76,6 +76,13 @@ if ($result->num_rows > 0) {
                     <p class='card-text'>" . htmlspecialchars($row['descrizione']) . "</p>
                     <p class='card-text'><small class='text-muted'>Inserito da: " . htmlspecialchars($row['utente_nome']) . " " . htmlspecialchars($row['utente_cognome']) . "</small></p>
                 </div>
+
+                <div class='d-flex justify-content-center pb-2'>
+                    <button class='btn btn-outline-success my-2 my-sm-0' type='submit'>
+                        <a style='color:black; text-decoration:none'  href='./addproposta/aggiungiProposta.php?id=" . $row["id"] . "'>fai una proposta</a>
+                    </button>
+                </div>
+
             </div>
         </div>";
 

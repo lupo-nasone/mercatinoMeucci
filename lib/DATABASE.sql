@@ -35,7 +35,7 @@ CREATE TABLE Proposta (
     id INT PRIMARY KEY AUTO_INCREMENT,
     prezzo DECIMAL(10, 2) NOT NULL,
     data DATE NOT NULL,
-    ora TIME NOT NULL,
+    ora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     accepted BOOLEAN,
     Annuncio_id INT NOT NULL,
     Utente_id INT NOT NULL,
