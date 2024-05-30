@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //riscritto il codice senza l'immagine per far funzionare per testing
     {
-    $sql = "INSERT INTO Annncio (titolo, descrizione, Categoria_id, Utente_id) 
+    $sql = "INSERT INTO Annucio (titolo, descrizione, Categoria_id, Utente_id) 
             VALUES ('$titolo', '$descrizione', (SELECT id FROM Categoria WHERE nome = '$tipologia'), $utente_id)";
     $result = $conn->query($sql);
     }
