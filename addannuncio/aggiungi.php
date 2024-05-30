@@ -1,3 +1,10 @@
+<!--
+
+        TODO:
+        - fixare sto casin bordel disastro della roba dei file
+
+
+-->
 <?php
 require_once "../lib/connection.php";
 
@@ -58,5 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     header("Location: ./aggiungiAnnuncio.php");
 
+}else{
+    header("Location: ../index.php");
 }
 ?>

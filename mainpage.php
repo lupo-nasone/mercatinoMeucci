@@ -11,11 +11,7 @@ unset($_SESSION["MSG_good"]);
 
 
         TODO:
-        - bottone su ogni annuncio per fare una proposta
         - bottone account per gestire account (cambia foto profilo, logout) (richiederà pagina account [se abbiamo intenzione di fare una cosa de genere {se abbiamo tempo}]);
-        - carousel delle immagini di annuncio
-
-
 
 
 -->

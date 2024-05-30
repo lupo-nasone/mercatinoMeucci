@@ -123,6 +123,9 @@
                 echo "<p>Nessun annuncio trovato.</p>";
             }
         ?>
+        <hr>
+        <h3>Lista delle proposte correnti</h3>
+        <!-- lista delle proposte -->
     </div>
 </body>
 </html>
