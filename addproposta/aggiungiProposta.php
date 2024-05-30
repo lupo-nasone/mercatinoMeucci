@@ -15,10 +15,11 @@
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
-    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/style.css">
+    
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-light bg-opacity-75">
         <div class="container-fluid">
             <a class="navbar-brand" href="../index.php"><img src="../images/pngwing.com.png" width="75" height="50">Mercatino dell'Assunzione</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,8 +46,9 @@
         </div>
     </nav>
 
-    <div class="px-auto text-center">
-        <h1 class="p-5">AGGIUNGI UNA PROPOSTA AL SEGUENTE ANNUNCIO</h1>
+    <div class="px-auto text-center py-3">
+        <a href="../index.php"><- torna indietro</a><br>
+        <h2 class="fw-semibold text-center">AGGIUNGI UNA PROPOSTA AL SEGUENTE ANNUNCIO</h2>
         <?php
 
             $sql = "SELECT Annuncio.id, Annuncio.titolo, Annuncio.descrizione, Categoria.nome as categoria, Utente.nome as utente_nome, Utente.cognome as utente_cognome 
@@ -61,7 +63,6 @@
                     
                     $annuncio_id = $row['id'];
                     echo "
-                        <div class='card'>
                             <div id='carouselExampleIndicators$annuncio_id' class='carousel slide' data-bs-ride='carousel'>
                                 <div class='carousel-inner'>";
                                 
@@ -101,11 +102,12 @@
                                 <p class='card-text'><small class='text-muted'>Inserito da: " . htmlspecialchars($row['utente_nome']) . " " . htmlspecialchars($row['utente_cognome']) . "</small></p>
                             </div>
             
-                            <div class='d-flex justify-content-center pb-2'>
+                            <div class='d-flex justify-content-center pb-2 my-2'>
                                 <form method='POST' action='./proponi.php'>
-                                    <input type='number' step='.01' name='proposta' placeholder='inserisci prezzo proposta'>
+                                    <input type='number' step='.01' name='proposta' placeholder='inserisci prezzo'>
                                     <input type='hidden' name='annuncio_id' value='$annuncio_id'>
-                                    <input type='submit' class='btn btn-outline-success my-2 my-sm-0'>
+                                    <br><br>
+                                    <input type='submit' class='btn btn-outline-success'>
                                 </form>
                             </div>
 
@@ -123,9 +125,9 @@
                 echo "<p>Nessun annuncio trovato.</p>";
             }
         ?>
-        <hr>
         <h3>Lista delle proposte correnti</h3>
         <!-- lista delle proposte -->
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
