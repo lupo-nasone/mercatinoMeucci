@@ -35,10 +35,22 @@ CREATE TABLE Proposta (
     id INT PRIMARY KEY AUTO_INCREMENT,
     prezzo DECIMAL(10, 2) NOT NULL,
     data DATE NOT NULL,
-    ora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ora TIME,
     accepted BOOLEAN,
     Annuncio_id INT NOT NULL,
     Utente_id INT NOT NULL,
     FOREIGN KEY (Annuncio_id) REFERENCES Annuncio(id) ON DELETE CASCADE,
     FOREIGN KEY (Utente_id) REFERENCES Utente(id) ON DELETE CASCADE
 );
+
+--trigger per impostare current time
+DELIMITER //
+CREATE TRIGGER set_time_before_insert
+BEFORE INSERT ON Proposta
+FOR EACH ROW
+BEGIN
+    SET NEW.ora = CURTIME();
+END;
+//
+DELIMITER ;
+

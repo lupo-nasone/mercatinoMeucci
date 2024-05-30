@@ -125,7 +125,53 @@
                 echo "<p>Nessun annuncio trovato.</p>";
             }
         ?>
+
+        <hr>
         <h3>Lista delle proposte correnti</h3>
+        <div class="container text-center">
+            <div class="row row-cols-1">
+                <?php 
+                
+                    $sql = "SELECT Proposta.prezzo as prezzo, Proposta.ora as ora, Proposta.data as data, Utente.nome as nome, Utente.cognome as cognome 
+                            FROM Proposta JOIN Utente ON Proposta.Utente_id = Utente.id WHERE Proposta.Annuncio_id = $annuncio_id ORDER BY data, ora DESC";
+                    
+                    $result = $conn->query($sql);
+                    
+                    if(!$result){
+                        echo "errore query";
+                    }else if($result->num_rows > 0){
+                        while($row = $result->fetch_assoc()){
+                            echo "<div class='col p-1 d-flex justify-content-center'>
+                            <div class='card' style='width: 18rem;'>
+                                <div class='card-body'>
+                                    <h5 class='card-title'>€ " . $row["prezzo"] . "</h5>
+                                    <h6 class='card-subtitle mb-2 text-body-secondary'>" . $row["ora"] . " " . $row["data"] . "</h6>
+                                    <p class='card-text'>da: " . $row["nome"] . " " . $row["cognome"] . "</p>
+                                </div>
+                            </div>
+                        </div> ";
+                        }
+                    }else{
+                        echo "<p class='text-center'>nessuna proposta</p>";
+                    }
+                
+                ?>
+        
+                <!-- questo è da copiare 
+                <div class="col p-1 d-flex justify-content-center">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">€ prezzo</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">hh:mm:ss dd:mm:yy</h6>
+                            <p class="card-text">nome e cognome</p>
+                        </div>
+                    </div>
+                </div>   
+                -->    
+            </div>
+        </div>
+        
+        
         <!-- lista delle proposte -->
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
