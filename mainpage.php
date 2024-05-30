@@ -31,7 +31,7 @@ unset($_SESSION["MSG_good"]);
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="index.php"><img src="../images/pngwing.com.png" width="75" height="50">Mercatino dell'Assunzione</a>
+      <a class="navbar-brand" href="index.php"><img src="./images/pngwing.com.png" width="75" height="50">Mercatino dell'Assunzione</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -51,12 +51,12 @@ unset($_SESSION["MSG_good"]);
         </ul>
         <form class="form-inline my-2 my-lg-0">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-            <a style="color:black; text-decoration:none" href="../addannuncio/aggiungiAnnuncio.php">+ Crea Annuncio</a>
+            <a style="color:black; text-decoration:none" href="./addannuncio/aggiungiAnnuncio.php">+ Crea Annuncio</a>
           </button>
         </form>
         <div class="form-inline my-2 my-lg-0 ms-3">
           <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">
-            <a style="color:black; text-decoration:none" href="../login/logout.php">Logout</a>
+            <a style="color:black; text-decoration:none" href="./login/logout.php">Logout</a>
           </button>
           <br>
 
