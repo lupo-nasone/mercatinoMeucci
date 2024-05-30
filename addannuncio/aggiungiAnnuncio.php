@@ -66,13 +66,13 @@
                     require_once "../lib/connection.php";
 
                     
-                    $sql = "SELECT nome FROM Categoria";
+                    $sql = "SELECT nome, id FROM Categoria";
                     $result = $conn->query($sql);
 
                     
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            echo "<option value='" . $row["nome"] . " ' class='form-select' aria-label='Default select example'>" . $row["nome"] . "</option>";
+                            echo "<option value='" . $row["id"] . " ' class='form-select' aria-label='Default select example'>" . $row["nome"] . "</option>";
                         }
                     } else {
                         echo "<option value='' class='form-select' aria-label='Default select example'>Nessuna tipologia disponibile</option>";
