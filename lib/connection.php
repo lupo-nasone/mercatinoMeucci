@@ -2,7 +2,7 @@
 $servername = "127.0.0.1";
 $username = "root";
 $password = "";
-$dbname = "mercatino";
+$dbname = "my_faginali5cia";
 
 mysqli_report(MYSQLI_REPORT_OFF);
 
