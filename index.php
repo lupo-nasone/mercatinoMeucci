@@ -3,7 +3,7 @@ require "./lib/connection.php";
 session_start();
 
 if (!isset($_SESSION['login'])) {
-    header("Location: ./login/login.html");
+    header("Location: ./login/loginPage.php");
 }
 
 $user_id = $_SESSION["login"];
@@ -14,5 +14,5 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     header("Location: mainpage.php");
 } else {
-    header("Location: ./login/login.html");
+    header("Location: ./login/loginPage.php");
 }

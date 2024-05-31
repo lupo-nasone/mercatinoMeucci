@@ -1,3 +1,9 @@
+<?php
+  session_start();
+  unset($_SESSION["loginMSG"]);
+  unset($_SESSION["loginMSG_good"]);
+?>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -15,6 +21,9 @@
         <p class="fs-1 text-center">REGISTRATI</p>
         <p class="fw-semibold text-center">Welcome to the dark side</p>
         <div class="card-body">
+          <p class="<?php echo isset($_SESSION["regMSG_good"]) ? ($_SESSION["regMSG_good"] ? "alert alert-success" : "alert alert-danger") : "" ?>">
+            <?php echo isset($_SESSION["regMSG"]) ? $_SESSION["regMSG"] : "" ?>
+          </p>
             <form method="post" action="register.php">
                 
                 <div data-mdb-input-init class="form-outline mb-4">
@@ -44,7 +53,7 @@
                   <div class="text-center pt-1">
                     <button data-mdb-button-init data-mdb-ripple-init class="btn btn-info btn-lg btn-block text-white bg-danger" type="submit" value="Accedi">Registrati</button>
                     <br>
-                    <a href="login.html">torna a loggamento</a>
+                    <a href="loginPage.php">torna a loggamento</a>
                 </div>
 
             </form>

@@ -14,10 +14,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$email', '$password', '$nome', '$cognome', '$eta', '$classe')";
     
     if ($conn->query($sql) === TRUE) {
-        header("Location: ../index.php");
-        exit();
+        $_SESSION["regMSG"] = "Account creato con successo!";
+        $_SESSION["regMSG_good"] = true;
+        header("Location: registerPage.php");
     } else {
-        echo "Errore durante la registrazione: " . $conn->error;
+        $_SESSION["regMSG"] = "Errore durante la registrazione: " . $conn->error;
+        $_SESSION["regMSG_good"] = false;
     }
 }
 else{

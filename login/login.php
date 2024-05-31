@@ -15,12 +15,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user_id = $row['id'];
         
         $_SESSION["login"] = $user_id;
-        
+
+
+        unset($_SESSION["loginMSG"]);
+        unset($_SESSION["loginMSG_good"]);
         header("Location: ../index.php");
         exit(); 
     } else {
-        echo "Nome utente o password non validi.";
-        echo "<a href='login.html'>Torna al login</a>";
+        $_SESSION["loginMSG"] = "Errore: email o password errati";
+        $_SESSION["loginMSG_good"] = false;
+        header("Location: loginPage.php");
     }
 }else{
     header("Location:../index.php"); 
