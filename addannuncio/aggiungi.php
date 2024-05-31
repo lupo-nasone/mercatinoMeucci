@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $utente_id = $_SESSION["login"];
 
-
+        // questo andrebbe fatto dopo l'upload della foto
          $result = $conn->query("INSERT INTO Annuncio (titolo, descrizione, Categoria_id, Utente_id) VALUES ('$titolo', '$descrizione', $tipologia , $utente_id)");
          if(!$result){
             $_SESSION["MSG"] = "Errore: " . $conn->error;
@@ -32,49 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["MSG_good"] = true;
         }
 
-        //qui va male 
-        //  $sql = "SELECT MAX(id) as id FROM Annuncio";
-        //  $maxid_res = $conn->query($sql);
-        //  $maxid = -1;
-        //  $_SESSION["test"] = $maxid_res;
-        //  if(!$maxid_res && $maxid_res->num_rows > 0){
-        //     while($row = $maxid_res->fetch_assoc){
-        //         $maxid = $row["id"];
-        //      }
-        //  }else{
-        //     $_SESSION["MSG"] = "errore nel selezionare max(id)";
-        //     $_SESSION["MSG_good"] = false;
-        //  }
-         
 
-        //il file continua a non venire spostato
-         if (!empty($_FILES['file']['name'][0]) /*&& $maxid > 0*/) {
-             $uploadsDir = './uploads/';
-             foreach ($_FILES['file']['tmp_name'] as $key => $tmpName) {
-                 $fileName = $_FILES['file']['name'][$key];
-                 $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
-                 $newFileName = uniqid() . '.' . $fileExtension;
-                 $targetPath = $uploadsDir . $newFileName;
-
-                if (move_uploaded_file($tmpName, $targetPath)) {
-                    $result = $conn->query("INSERT INTO Foto (url, Annuncio_id) VALUES ('$targetPath', $maxid)");
-                 } else {
-                    
-                    $_SESSION["MSG"] = "errore spostamento file(annuncio postato con immagine invalida)";
-                    $_SESSION["MSG_good"] = false;;
-                 }
-            }
-        }
-
-
-        //riscritto il codice senza l'immagine per far funzionare per testing
-        // {
-        // $sql = "INSERT INTO Annuncio (titolo, descrizione, Categoria_id, Utente_id) 
-        //         VALUES ('$titolo', '$descrizione', '$tipologia', $utente_id)";
-        // $result = $conn->query($sql);
-        // }
-
-        //fine riscrittura
 
         
         echo '<script>window.location="./aggiungiAnnuncio.php"</script>';

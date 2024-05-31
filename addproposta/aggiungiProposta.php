@@ -101,7 +101,7 @@
                                 <h5 class='card-title'>" . htmlspecialchars($row['titolo']) . "</h5>
                                 <h6 class='card-subtitle mb-2 text-muted'>Categoria: " . htmlspecialchars($row['categoria']) . "</h6>
                                 <p class='card-text'>" . htmlspecialchars($row['descrizione']) . "</p>
-                                <p class='card-text'><small class='text-muted'>Inserito da: " . htmlspecialchars($row['utente_nome']) . " " . htmlspecialchars($row['utente_cognome']) . "</small></p>
+                                <p class='card-text'><small class='text-muted'>Postato da: " . htmlspecialchars($row['utente_nome']) . " " . htmlspecialchars($row['utente_cognome']) . "</small></p>
                             </div>
             
                             <div class='d-flex justify-content-center pb-2 my-2'>
