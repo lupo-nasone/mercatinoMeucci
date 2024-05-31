@@ -1,8 +1,8 @@
 CREATE TABLE Utente (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    email VARCHAR(255) UNIQUE,
+    email VARCHAR(200) UNIQUE,
     password VARCHAR(64) NOT NULL,
-    foto VARCHAR(255),
+    foto VARCHAR(200),
     nome VARCHAR(100) NOT NULL,
     cognome VARCHAR(100) NOT NULL,
     eta INT NOT NULL,
