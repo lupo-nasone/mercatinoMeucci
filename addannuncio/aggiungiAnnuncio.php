@@ -28,6 +28,7 @@
             const newFileInput = document.createElement('input');
             newFileInput.type = 'file';
             newFileInput.name = 'foto[]';
+            newFileInput.required = true;
 
             const fileInputContainer = document.getElementById('fileInputContainer');
             fileInputContainer.appendChild(newFileInput);

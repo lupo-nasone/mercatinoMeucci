@@ -43,7 +43,7 @@
                   </div>
 
                   <div data-mdb-input-init class="form-outline mb-4">
-                    <input type="number" name="eta" class="form-control" placeholder="eta" required/>
+                    <input type="number" name="eta" class="form-control" placeholder="eta" required min="1" max="99"/>
                   </div>
 
                   <div data-mdb-input-init class="form-outline mb-4">
