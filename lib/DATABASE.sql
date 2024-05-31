@@ -43,7 +43,7 @@ CREATE TABLE Proposta (
     FOREIGN KEY (Utente_id) REFERENCES Utente(id) ON DELETE CASCADE
 );
 
---trigger per impostare current time
+
 DELIMITER //
 CREATE TRIGGER set_time_before_insert
 BEFORE INSERT ON Proposta
