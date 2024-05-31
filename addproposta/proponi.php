@@ -9,8 +9,8 @@ if (!isset($_SESSION["login"])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $prezzo = $_POST["proposta"];
     $annuncio_id = $_POST["annuncio_id"];	
-    $sql = "INSERT INTO Proposta (prezzo, data, accepted, Annuncio_id, Utente_id) 
-            VALUES($prezzo, '" . date("Y-m-d") . "' , false, $annuncio_id, '" . $_SESSION["login"] . "')";
+    $sql = "INSERT INTO Proposta (prezzo, created_at, accepted, Annuncio_id, Utente_id) 
+            VALUES($prezzo, '" . date('Y-m-d H:i:s') . "' , false, $annuncio_id, '" . $_SESSION["login"] . "')";
 
     $result = $conn->query($sql);
 

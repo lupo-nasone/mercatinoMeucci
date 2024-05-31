@@ -1,6 +1,8 @@
 <?php
     require("../lib/connection.php");
     session_start();
+    unset($_SESSION["MSG"]);
+    unset($_SESSION["MSG_good"]);
     $annuncio_id = isset($_GET["id"]) ? (is_numeric($_GET["id"]) ? $_GET["id"] : -1) : -1;
     if(!isset($_SESSION["login"]) || $annuncio_id < 1){
         header("Location: ../index.php");
@@ -132,8 +134,8 @@
             <div class="row row-cols-1">
                 <?php 
                 
-                    $sql = "SELECT Proposta.prezzo as prezzo, Proposta.ora as ora, Proposta.data as data, Utente.nome as nome, Utente.cognome as cognome 
-                            FROM Proposta JOIN Utente ON Proposta.Utente_id = Utente.id WHERE Proposta.Annuncio_id = $annuncio_id ORDER BY data, ora DESC";
+                    $sql = "SELECT Proposta.prezzo as prezzo, Proposta.created_at as created_at, Utente.nome as nome, Utente.cognome as cognome 
+                    FROM Proposta JOIN Utente ON Proposta.Utente_id = Utente.id WHERE Proposta.Annuncio_id = $annuncio_id ORDER BY created_at DESC";
                     
                     $result = $conn->query($sql);
                     
@@ -145,7 +147,7 @@
                             <div class='card' style='width: 18rem;'>
                                 <div class='card-body'>
                                     <h5 class='card-title'>€ " . $row["prezzo"] . "</h5>
-                                    <h6 class='card-subtitle mb-2 text-body-secondary'>" . $row["ora"] . " " . $row["data"] . "</h6>
+                                    <h6 class='card-subtitle mb-2 text-body-secondary'>" . $row["created_at"] . "</h6>
                                     <p class='card-text'>da: " . $row["nome"] . " " . $row["cognome"] . "</p>
                                 </div>
                             </div>
