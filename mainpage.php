@@ -64,10 +64,10 @@ unset($_SESSION["MSG_good"]);
     </div>
   </nav>
 
+  
   <div class="container mt-5" id="annunci-container">
     <?php include 'render_annunci.php'; ?>
   </div>
-
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const links = document.querySelectorAll('.nav-link');
@@ -89,6 +89,7 @@ unset($_SESSION["MSG_good"]);
       });
     });
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 </body>
 
