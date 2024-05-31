@@ -7,7 +7,7 @@ unset($_SESSION["MSG_good"]);
 <!--
 
         TODO:
-        - fixare sto casin bordel disastro della roba dei file
+        - fare controllo che file sia immagine
         - quando l'upload file funziona, assicurarsi che l'annuncio non venga postato se non va a buon fine anche il file
 
 -->
@@ -24,10 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $annuncio_id = null;
     $uploadSuccess = true;
 
-    // Inizia una transazione
     $conn->begin_transaction();
 
-    // Inserisci l'annuncio una sola volta
     $result = $conn->query("INSERT INTO Annuncio (titolo, descrizione, Categoria_id, Utente_id) VALUES ('$titolo', '$descrizione', $tipologia, $utente_id)");
 
     if ($result) {
@@ -40,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($tmpFilePath != "") {
                 $ext = pathinfo($_FILES['foto']['name'][$i], PATHINFO_EXTENSION);
-                // Verifica il tipo di file immagine
+
                 $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
                 if (!in_array($ext, $allowedTypes)) {
                     $_SESSION["MSG"] = "Errore: Formato file non supportato.";
@@ -75,12 +73,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($uploadSuccess) {
-        // Se tutto è andato bene, conferma la transazione
+
         $conn->commit();
         $_SESSION["MSG"] = "Annuncio postato con successo.";
         $_SESSION["MSG_good"] = true;
     } else {
-        // Altrimenti, annulla la transazione
+
         $conn->rollback();
     }
 

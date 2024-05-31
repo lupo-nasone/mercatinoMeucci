@@ -1,21 +1,6 @@
 <?php
     session_start();
 ?>
-<!--
-
-
-
-
-            TODO:
-            - fixare il fatto che non funzioni il caricamento file
-            - controllo su estensioni file aggiunto
-            - bottone carica file a lato di un file già caricato non deve far
-              apparire un nuovo bottone di caricamento file sul click
-
-
-
-
--->
 <!DOCTYPE html>
 <html lang="it">
 
@@ -46,10 +31,11 @@
 <body>
 
     <div class="card position-relative position-absolute top-50 start-50 translate-middle p-3 bg-white bg-opacity-50" style="width: 18rem;">
-        <a href="../index.php"><- torna indietro</a><br>
-        <img src="./images/y8i8nhc6rg571.png" class="card-img-top" style="border-radius: 10rem;">
-        <hr>
-        <p class="fw-semibold text-center">Aggiungi annuncio</p>
+    <a href="../index.php"><button type="button" class="btn btn-light btn-block"><- torna indietro</button></a>
+        <!-- Tolto perchè quando compare l'alert per il success o fail poi diventa troppo grande per la pagina e non puoi tornare indietro-->
+        <!-- <img src="./images/y8i8nhc6rg571.png" class="card-img-top" style="border-radius: 10rem;">
+        <hr> -->
+        <p class="fw-semibold text-center fs-3 mt-4">Aggiungi annuncio</p>
         <div class="card-body">
             <form method="post" action="aggiungi.php" enctype="multipart/form-data">
 
@@ -89,7 +75,7 @@
                     
                     <p class="<?php echo isset($_SESSION["MSG_good"]) ? ($_SESSION["MSG_good"] ? "alert alert-success" : "alert alert-danger") : "" ?>"><?php echo isset($_SESSION["MSG"]) ? $_SESSION["MSG"] : "" ?></p>
                     <button data-mdb-button-init data-mdb-ripple-init
-                        class="btn btn-dark btn-lg btn-block text-black bg-white" type="submit"
+                        class="btn btn-light btn-block" type="submit"
                         value="aggiungi">Aggiungi</button>
                     <br>
                 </div>

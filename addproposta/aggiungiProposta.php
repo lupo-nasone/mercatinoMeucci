@@ -8,6 +8,14 @@
         header("Location: ../index.php");
     }
 ?>
+<!-- 
+
+    TODO:
+    - modificare database, un utente puo fare solo una proposta per annuncio 
+      basta fare UNIQUE(Annuncio_id, Utente_id) in proposta in teoria
+    - un utente non puo fare una proposta su un proprio annuncio
+
+-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,104 +41,95 @@
                         <a class="nav-link" aria-current="page" href="../index.php">Home</a>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                        <a style="color:black; text-decoration:none" href="../addannuncio/aggiungiAnnuncio.php">+ Crea Annuncio</a>
-                    </button>
-                </form>
-                <div class="form-inline my-2 my-lg-0 ms-3">
-                    <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">
-                        <a style="color:black; text-decoration:none" href="../login/logout.php">Logout</a>
-                    </button>
-                </div>
                 <br>
             </div>
         </div>
     </nav>
+    <h2 class="fw-semibold text-center">AGGIUNGI UNA PROPOSTA AL SEGUENTE ANNUNCIO</h2>
+    <div class="d-flex justify-content-center">
+    <?php 
+    $sql = "SELECT Annuncio.id, Annuncio.titolo, Annuncio.descrizione, Categoria.nome as categoria, Utente.nome as utente_nome, Utente.cognome as utente_cognome
+    FROM Annuncio
+    JOIN Categoria ON Annuncio.Categoria_id = Categoria.id
+    JOIN Utente ON Annuncio.Utente_id = Utente.id WHERE Annuncio.id = $annuncio_id";
+    $result = $conn->query($sql);
 
-    <div class="px-auto text-center py-3">
-        <a href="../index.php"><- torna indietro</a><br>
-        <h2 class="fw-semibold text-center">AGGIUNGI UNA PROPOSTA AL SEGUENTE ANNUNCIO</h2>
-        <?php
-
-            $sql = "SELECT Annuncio.id, Annuncio.titolo, Annuncio.descrizione, Categoria.nome as categoria, Utente.nome as utente_nome, Utente.cognome as utente_cognome 
-            FROM Annuncio
-            JOIN Categoria ON Annuncio.Categoria_id = Categoria.id
-            JOIN Utente ON Annuncio.Utente_id = Utente.id
-            WHERE Annuncio.id = $annuncio_id";
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    
-                    $annuncio_id = $row['id'];
-                    echo "
-                            <div id='carouselExampleIndicators$annuncio_id' class='carousel slide' data-bs-ride='carousel'>
-                                <div class='carousel-inner'>";
-                                
-                                $sql_images = "SELECT url FROM Foto WHERE Annuncio_id = $annuncio_id";
-                                $result_images = $conn->query($sql_images);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+    
+            echo "<div class='col-md-4 mb-4'>
+                <div class='card'>";
             
-                                if ($result_images->num_rows > 0) {
-                                    $active = 'active';
-                                    while ($row_image = $result_images->fetch_assoc()) {
-                                        echo "
-                                        <div class='carousel-item $active'>
-                                            <img src='./addannuncio/uploads/" . htmlspecialchars(basename($row_image['url'])) . "' class='d-block w-100' alt='...'>
-                                        </div>";
-                                        $active = '';
-                                    }
-                                } else {
-                                    echo "
-                                    <div class='carousel-item active'>
-                                        <img src='placeholder.jpg' class='d-block w-100' alt='...'>
-                                    </div>";
-                                }
-            
-                    echo "      </div>
-                                <button class='carousel-control-prev' type='button' data-bs-target='#carouselExampleIndicators$annuncio_id' data-bs-slide='prev'>
-                                    <span class='carousel-control-prev-icon' aria-hidden='true'></span>
-                                    <span class='visually-hidden'>Previous</span>
-                                </button>
-                                <button class='carousel-control-next' type='button' data-bs-target='#carouselExampleIndicators$annuncio_id' data-bs-slide='next'>
-                                    <span class='carousel-control-next-icon' aria-hidden='true'></span>
-                                    <span class='visually-hidden'>Next</span>
-                                </button>
-                            </div>
-                            <div class='card-body'>
-                                <h5 class='card-title'>" . htmlspecialchars($row['titolo']) . "</h5>
-                                <h6 class='card-subtitle mb-2 text-muted'>Categoria: " . htmlspecialchars($row['categoria']) . "</h6>
-                                <p class='card-text'>" . htmlspecialchars($row['descrizione']) . "</p>
-                                <p class='card-text'><small class='text-muted'>Postato da: " . htmlspecialchars($row['utente_nome']) . " " . htmlspecialchars($row['utente_cognome']) . "</small></p>
-                            </div>
-            
-                            <div class='d-flex justify-content-center pb-2 my-2'>
-                                <form method='POST' action='./proponi.php'>
-                                    <input type='number' step='.01' name='proposta' placeholder='inserisci prezzo'>
-                                    <input type='hidden' name='annuncio_id' value='$annuncio_id'>
-                                    <br><br>
-                                    <input type='submit' class='btn btn-outline-success'>
-                                </form>
-                            </div>
-
-                                <p";
-
-                                if(isset($_SESSION["MSG"]) && isset($_SESSION["MSG_good"])){
-                                    echo " class='alert alert-" . ($_SESSION["MSG_good"] ? "success" : "danger") . "'> " . $_SESSION["MSG"] . "</p>";
-                                }else{
-                                    echo "></p>";
-                                }
-                           
+    
+            $sql_images = "SELECT url FROM Foto WHERE Annuncio_id = $annuncio_id";
+            $result_images = $conn->query($sql_images);
+            $num_images = $result_images->num_rows;
+    
+            if ($num_images > 1) {
+    
+                echo "<div id='carousel$annuncio_id' class='carousel slide'>
+                        <div class='carousel-inner'>";
+    
+                $first = true;
+                while ($row_image = $result_images->fetch_assoc()) {
+                    echo "<div class='carousel-item " . ($first ? 'active' : '') . "'>
+                            <img src='../addannuncio/" . $row_image['url'] . "' class='d-block w-100' alt='...'>
+                          </div>";
+                    $first = false;
                 }
-
+    
+                echo "  </div>
+                        <button class='carousel-control-prev' type='button' data-bs-target='#carousel$annuncio_id' data-bs-slide='prev'>
+                            <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+                            <span class='visually-hidden'>Previous</span>
+                        </button>
+                        <button class='carousel-control-next' type='button' data-bs-target='#carousel$annuncio_id' data-bs-slide='next'>
+                            <span class='carousel-control-next-icon' aria-hidden='true'></span>
+                            <span class='visually-hidden'>Next</span>
+                        </button>
+                      </div>";
             } else {
-                echo "<p>Nessun annuncio trovato.</p>";
+    
+                $row_image = $result_images->fetch_assoc();
+                $image_url = $row_image ? '../addannuncio/' . $row_image['url'] : './addannuncio/uploads/placeholder.png';
+                echo "<img src='$image_url' class='d-block w-100' alt='...'>";
             }
-        ?>
+    
+            echo "  <div class='card-body'>
+                        <h5 class='card-title'>" . $row['titolo'] . "</h5>
+                        <h6 class='card-subtitle mb-2 text-muted'>Categoria: " . $row['categoria'] . "</h6>
+                        <p class='card-text'>" . $row['descrizione'] . "</p>
+                        <p class='card-text'><small class='text-muted'>Postato da: " . $row['utente_nome'] . " " . $row['utente_cognome'] . "</small></p>
+                    </div>
+                    <div class='d-flex justify-content-center pb-2 my-2'>
+                        <form method='POST' action='./proponi.php'>
+                            <input type='number' step='.01' min='0.01' name='proposta' placeholder='inserisci prezzo'>
+                            <input type='hidden' name='annuncio_id' value='$annuncio_id'>
+                            <br><br>
+                            <input type='submit' class='btn btn-outline-success'>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <p";
+            if(isset($_SESSION["MSG"]) && isset($_SESSION["MSG_good"])){
+                echo " class='alert alert-" . ($_SESSION["MSG_good"] ? "success" : "danger") . "'> " . $_SESSION["MSG"] . "</p>";
+            }else{
+                echo "></p>";
+            }
+
+
+        }
+    } else {
+        echo "<p>Nessun annuncio trovato.</p>";
+    }
+    ?>
+    </div>
+    
 
         <hr>
-        <h3>Lista delle proposte correnti</h3>
-        <div class="container text-center">
+        <h3 class="text-center">Lista delle proposte correnti</h3>
+        <div class="container text-center pb-5">
             <div class="row row-cols-1">
                 <?php 
                 
@@ -172,9 +171,6 @@
                 -->    
             </div>
         </div>
-        
-        
-        <!-- lista delle proposte -->
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

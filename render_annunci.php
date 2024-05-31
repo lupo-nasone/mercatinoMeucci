@@ -29,13 +29,13 @@ if ($result->num_rows > 0) {
         echo "<div class='col-md-4 mb-4'>
             <div class='card'>";
         
-        // Recupera le immagini per l'annuncio corrente
+
         $sql_images = "SELECT url FROM Foto WHERE Annuncio_id = $annuncio_id";
         $result_images = $conn->query($sql_images);
         $num_images = $result_images->num_rows;
 
         if ($num_images > 1) {
-            // Se ci sono più immagini, crea un carousel
+
             echo "<div id='carousel$annuncio_id' class='carousel slide'>
                     <div class='carousel-inner'>";
 
@@ -58,7 +58,7 @@ if ($result->num_rows > 0) {
                     </button>
                   </div>";
         } else {
-            // Se c'è una sola immagine, mostra solo l'immagine
+
             $row_image = $result_images->fetch_assoc();
             $image_url = $row_image ? './addannuncio/uploads/' . htmlspecialchars(basename($row_image['url'])) : './addannuncio/uploads/placeholder.png';
             echo "<img src='$image_url' class='d-block w-100' alt='...'>";
