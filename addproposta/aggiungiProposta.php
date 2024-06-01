@@ -97,7 +97,7 @@
             
             if($creatore_annuncio == $_SESSION["login"]){
             echo   "<div class='text-center' pb-2 my-2'>
-                        <p class='text-info'>non puoi fare una proposta su un tuo annuncio</p>
+                        <p class='text-danger'>non puoi fare una proposta su un tuo annuncio</p>
                     </div>";
 
             }else{

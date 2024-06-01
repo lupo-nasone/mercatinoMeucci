@@ -1,3 +1,11 @@
+<?php 
+require "../lib/connection.php";
+session_start();
+if (!isset($_SESSION["login"])) {
+    header("Location: index.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +22,7 @@
       <a class="navbar-brand" href="../index.php"><img src="../images/pngwing.com.png" width="75" height="50">Mercatino dell'Assunzione</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-      </button>
+        </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
@@ -33,7 +41,34 @@
           <br>
       </div>
     </div>
-  </nav>
+</nav>
+
+  <p class="fs-2 mt-4 text-center">Dati Utente</p>
+  <hr>
+  <div class="d-flex flex-column text-center">
+    <?php 
+        $sql = "SELECT * FROM Utente WHERE Utente.id = " . $_SESSION["login"];
+        $result = $conn->query($sql);
+        if(!$result){
+            echo "utente non valido";
+        }else{
+            $data = $result->fetch_assoc();
+            echo "<p><strong>E-Mail</strong>: " . $data["email"]."</p>";
+            echo "<p><strong>Nome</strong>: " . $data["nome"]."</p>";
+            echo "<p><strong>Cognome</strong>: " . $data["cognome"]."</p>";
+            echo "<p><strong>Classe</strong>: " . $data["classe"]."</p>";
+            echo "<p><strong>Età</strong>: " . $data["eta"]."</p>";
+
+        }
+    ?>
+    <div class="d-flex justify-content-center">
+        <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">
+            <a class="text-dark text-decoration-none" href="../login/logout.php">Log Out</a>
+        </button>
+    </div>
+  </div>
+  
+  
 
 
 </body>
