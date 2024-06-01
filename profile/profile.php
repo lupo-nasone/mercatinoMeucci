@@ -67,9 +67,13 @@ if (!isset($_SESSION["login"])) {
         </button>
     </div>
   </div>
-  
-  
-
+  <hr>
+    <div class="form-check form-switch text-center d-flex justify-content-center">
+        <p class="pe-5">Annunci</p>
+        <input class="form-check-input me-2" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+        <p class="pe-4">Proposte</p>
+    </div>
+    <!-- e poi qui si dovrà mettere gli annunci e le proposte e farli apparire rispetto a come selezionato-->        
 
 </body>
 </html>
