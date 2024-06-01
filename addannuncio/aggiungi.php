@@ -14,7 +14,6 @@ unset($_SESSION["MSG_good"]);
     $descrizione = $_POST['descrizione'];
     $tipologia = $_POST['tipologia'];
     $utente_id = $_SESSION["login"];
-
     $annuncio_id = null;
     $uploadSuccess = true;
 

@@ -5,13 +5,8 @@
     if(!isset($_SESSION["login"]) || $annuncio_id < 1){
         header("Location: ../index.php");
     }
+
 ?>
-<!-- 
-
-    TODO:
-    - un utente non puo fare una proposta su un proprio annuncio
-
--->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,14 +39,15 @@
     <h2 class="fw-semibold text-center">AGGIUNGI UNA PROPOSTA AL SEGUENTE ANNUNCIO</h2>
     <div class="d-flex justify-content-center">
     <?php 
-    $sql = "SELECT Annuncio.id, Annuncio.titolo, Annuncio.descrizione, Categoria.nome as categoria, Utente.nome as utente_nome, Utente.cognome as utente_cognome
+    $sql = "SELECT Annuncio.id, Annuncio.titolo, Annuncio.descrizione, Categoria.nome as categoria, Utente.nome as utente_nome, Utente.cognome as utente_cognome, Utente_id
     FROM Annuncio
     JOIN Categoria ON Annuncio.Categoria_id = Categoria.id
     JOIN Utente ON Annuncio.Utente_id = Utente.id WHERE Annuncio.id = $annuncio_id";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
+        $row = $result->fetch_assoc();
+        $creatore_annuncio = $row["Utente_id"];
     
             echo "<div class='col-md-4 mb-4'>
                 <div class='card'>";
@@ -96,9 +92,17 @@
                         <h6 class='card-subtitle mb-2 text-muted'>Categoria: " . $row['categoria'] . "</h6>
                         <p class='card-text'>" . $row['descrizione'] . "</p>
                         <p class='card-text'><small class='text-muted'>Postato da: " . $row['utente_nome'] . " " . $row['utente_cognome'] . "</small></p>
-                    </div>
-                    <diAHAHAHAHv class='d-flex justify-content-center pb-2 my-2'>
-                        <form method='POST' action='./proponi.php'>
+                    </div>";
+                    
+            
+            if($creatore_annuncio == $_SESSION["login"]){
+            echo   "<div class='text-center' pb-2 my-2'>
+                        <p class='text-info'>non puoi fare una proposta su un tuo annuncio</p>
+                    </div>";
+
+            }else{
+            echo "  <div class='d-flex justify-content-center pb-2 my-2'>
+                        <form method='POST' action='./proponi.php' class='text-center'>
                             <input type='number' step='.01' min='0.01' name='proposta' placeholder='inserisci prezzo'>
                             <input type='hidden' name='annuncio_id' value='$annuncio_id'>
                             <br><br>
@@ -115,10 +119,10 @@
             }else{
                 echo "></p>";
             }
+            }
+           
             echo "</div>";
 
-
-        }
     } else {
         echo "<p>Nessun annuncio trovato.</p>";
     }

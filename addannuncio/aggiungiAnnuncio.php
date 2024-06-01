@@ -4,6 +4,13 @@
         header("Location: ../index.php");
     }
 ?>
+<!-- 
+
+    TODO:
+    - fixare che quando generi più file upload poi non puoi submittare finchè non gli hai riempiti tutti.
+        mettere che basta riempirne 1.
+
+-->
 <!DOCTYPE html>
 <html lang="it">
 
