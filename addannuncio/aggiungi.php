@@ -1,21 +1,15 @@
 <?php 
+require "../lib/connection.php";
 session_start();
+if ($_SERVER["REQUEST_METHOD"] != "POST" && !isset($_SESSION["login"])){
+    header("Location: ../index.php");
+} 
 unset($_SESSION["MSG"]);
 unset($_SESSION["MSG_good"]);
 ?>
 
-<!--
-
-        TODO:
-        - fare controllo che file sia immagine
-        - quando l'upload file funziona, assicurarsi che l'annuncio non venga postato se non va a buon fine anche il file
-
--->
-
 <?php
-require_once "../lib/connection.php";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $titolo = $_POST['Titolo'];
     $descrizione = $_POST['descrizione'];
     $tipologia = $_POST['tipologia'];
@@ -23,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $annuncio_id = null;
     $uploadSuccess = true;
+
 
     $conn->begin_transaction();
 
@@ -83,5 +78,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     echo '<script>window.location="./aggiungiAnnuncio.php"</script>';
-}
+
 ?>

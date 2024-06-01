@@ -39,6 +39,7 @@ CREATE TABLE Proposta (
     Annuncio_id INT NOT NULL,
     Utente_id INT NOT NULL,
     FOREIGN KEY (Annuncio_id) REFERENCES Annuncio(id) ON DELETE CASCADE,
-    FOREIGN KEY (Utente_id) REFERENCES Utente(id) ON DELETE CASCADE
+    FOREIGN KEY (Utente_id) REFERENCES Utente(id) ON DELETE CASCADE,
+    UNIQUE(Annuncio_id, Utente_id)
 );
 

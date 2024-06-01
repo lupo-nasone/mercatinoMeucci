@@ -1,8 +1,6 @@
 <?php
     require("../lib/connection.php");
     session_start();
-    unset($_SESSION["MSG"]);
-    unset($_SESSION["MSG_good"]);
     $annuncio_id = isset($_GET["id"]) ? (is_numeric($_GET["id"]) ? $_GET["id"] : -1) : -1;
     if(!isset($_SESSION["login"]) || $annuncio_id < 1){
         header("Location: ../index.php");
@@ -11,8 +9,6 @@
 <!-- 
 
     TODO:
-    - modificare database, un utente puo fare solo una proposta per annuncio 
-      basta fare UNIQUE(Annuncio_id, Utente_id) in proposta in teoria
     - un utente non puo fare una proposta su un proprio annuncio
 
 -->
@@ -91,7 +87,7 @@
             } else {
     
                 $row_image = $result_images->fetch_assoc();
-                $image_url = $row_image ? '../addannuncio/' . $row_image['url'] : './addannuncio/uploads/placeholder.png';
+                $image_url = $row_image ? '../addannuncio/' . $row_image['url'] : '../addannuncio/uploads/placeholder.png';
                 echo "<img src='$image_url' class='d-block w-100' alt='...'>";
             }
     
@@ -101,7 +97,7 @@
                         <p class='card-text'>" . $row['descrizione'] . "</p>
                         <p class='card-text'><small class='text-muted'>Postato da: " . $row['utente_nome'] . " " . $row['utente_cognome'] . "</small></p>
                     </div>
-                    <div class='d-flex justify-content-center pb-2 my-2'>
+                    <diAHAHAHAHv class='d-flex justify-content-center pb-2 my-2'>
                         <form method='POST' action='./proponi.php'>
                             <input type='number' step='.01' min='0.01' name='proposta' placeholder='inserisci prezzo'>
                             <input type='hidden' name='annuncio_id' value='$annuncio_id'>
@@ -111,12 +107,15 @@
                     </div>
                 </div>
             </div>
+            </div>
+            <div class='d-flex justify-content-center'>
             <p";
             if(isset($_SESSION["MSG"]) && isset($_SESSION["MSG_good"])){
-                echo " class='alert alert-" . ($_SESSION["MSG_good"] ? "success" : "danger") . "'> " . $_SESSION["MSG"] . "</p>";
+                echo " class='w-25 text-center alert alert-" . ($_SESSION["MSG_good"] ? "success" : "danger") . "'> " . $_SESSION["MSG"] . "</p>";
             }else{
                 echo "></p>";
             }
+            echo "</div>";
 
 
         }
@@ -124,7 +123,7 @@
         echo "<p>Nessun annuncio trovato.</p>";
     }
     ?>
-    </div>
+
     
 
         <hr>
