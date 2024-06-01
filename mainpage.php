@@ -50,15 +50,20 @@ unset($_SESSION["MSG_good"]);
           }
           ?>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-            <a class="text-dark text-decoration-none" href="./addannuncio/aggiungiAnnuncio.php">+ Crea Annuncio</a>
-          </button>
-        </form>
+        <div class="form-inline my-2 my-lg-0">
+          <a href="./addannuncio/aggiungiAnnuncio.php">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+              <span class="text-dark text-decoration-none">+ Crea Annuncio</span>
+            </button>
+          </a>
+        </div>
         <div class="form-inline my-2 my-lg-0 ms-3">
-          <button class="btn btn-outline-info my-2 my-sm-0" type="submit">
-            <a class="text-dark text-decoration-none" href="./profile/profile.php">Profilo</a>
-          </button>
+          <a href="./profile/profile.php">
+            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">
+              <span class="text-dark text-decoration-none" >Profilo</span>
+            </button>
+          </a>
+          
           <br>
 
       </div>

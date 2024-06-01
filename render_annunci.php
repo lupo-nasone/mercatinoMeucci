@@ -43,7 +43,7 @@ if ($result->num_rows > 0) {
             while ($row_image = $result_images->fetch_assoc()) {
                 echo "<div class='carousel-item " . ($first ? 'active' : '') . "'>
                         <img src='./addannuncio/uploads/" . htmlspecialchars(basename($row_image['url'])) . "' class='d-block w-100' alt='...'>
-                      </div>";
+                    </div>";
                 $first = false;
             }
 
@@ -56,7 +56,7 @@ if ($result->num_rows > 0) {
                         <span class='carousel-control-next-icon' aria-hidden='true'></span>
                         <span class='visually-hidden'>Next</span>
                     </button>
-                  </div>";
+                </div>";
         } else {
 
             $row_image = $result_images->fetch_assoc();
@@ -71,9 +71,11 @@ if ($result->num_rows > 0) {
                     <p class='card-text'><small class='text-muted'>Postato da: " . htmlspecialchars($row['utente_nome']) . " " . htmlspecialchars($row['utente_cognome']) . "</small></p>
                 </div>
                 <div class='d-flex justify-content-center pb-2'>
-                    <button class='btn btn-outline-success my-2 my-sm-0' type='submit'>
-                        <a style='color:black; text-decoration:none' href='./addproposta/aggiungiProposta.php?id=" . $row["id"] . "'>fai una proposta</a>
-                    </button>
+                    <a href='./addproposta/aggiungiProposta.php?id=" . $row["id"] . "'>
+                        <button class='btn btn-outline-success my-2 my-sm-0' type='submit'>
+                            <span>fai una proposta</span>
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>";

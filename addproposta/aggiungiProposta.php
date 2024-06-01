@@ -66,7 +66,7 @@
                 while ($row_image = $result_images->fetch_assoc()) {
                     echo "<div class='carousel-item " . ($first ? 'active' : '') . "'>
                             <img src='../addannuncio/" . $row_image['url'] . "' class='d-block w-100' alt='...'>
-                          </div>";
+                        </div>";
                     $first = false;
                 }
     
@@ -79,7 +79,7 @@
                             <span class='carousel-control-next-icon' aria-hidden='true'></span>
                             <span class='visually-hidden'>Next</span>
                         </button>
-                      </div>";
+                    </div>";
             } else {
     
                 $row_image = $result_images->fetch_assoc();
@@ -120,7 +120,7 @@
                 echo "></p>";
             }
             }
-           
+        
             echo "</div>";
 
     } else {
