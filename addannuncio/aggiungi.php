@@ -1,11 +1,11 @@
 <?php 
-require "../lib/connection.php";
-session_start();
-if ($_SERVER["REQUEST_METHOD"] != "POST" && !isset($_SESSION["login"])){
-    header("Location: ../index.php");
-} 
-unset($_SESSION["MSG"]);
-unset($_SESSION["MSG_good"]);
+    require "../lib/connection.php";
+    session_start();
+    if ($_SERVER["REQUEST_METHOD"] != "POST" || !isset($_SESSION["login"])){
+        header("Location: ../index.php");
+    } 
+    unset($_SESSION["MSG"]);
+    unset($_SESSION["MSG_good"]);
 ?>
 
 <?php
