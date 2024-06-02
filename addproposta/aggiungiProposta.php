@@ -97,7 +97,7 @@
             
             if($creatore_annuncio == $_SESSION["login"]){
             echo   "<div class='text-center' pb-2 my-2'>
-                        <p class='text-danger'>non puoi fare una proposta su un tuo annuncio</p>
+                        <p class='text-danger'>stai visualizzando un tuo annuncio</p>
                     </div>";
 
             }else{
@@ -160,18 +160,6 @@
                     }
                 
                 ?>
-        
-                <!-- questo è da copiare 
-                <div class="col p-1 d-flex justify-content-center">
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">€ prezzo</h5>
-                            <h6 class="card-subtitle mb-2 text-body-secondary">hh:mm:ss dd:mm:yy</h6>
-                            <p class="card-text">nome e cognome</p>
-                        </div>
-                    </div>
-                </div>   
-                -->    
             </div>
         </div>
     </div>

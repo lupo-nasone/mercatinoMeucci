@@ -75,7 +75,76 @@ if (!isset($_SESSION["login"])) {
         <input class="form-check-input me-2" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
         <p class="pe-4">Proposte</p>
     </div>
-    <!-- e poi qui si dovrà mettere gli annunci e le proposte e farli apparire rispetto a come selezionato-->        
+    <!-- e poi qui si dovrà mettere gli annunci e le proposte e farli apparire rispetto a come selezionato-->    
+    <div id="annunci" class="row row-cols-1">
+        <?php 
+        $sql = "SELECT Annuncio.id, Annuncio.titolo, Annuncio.descrizione, Categoria.nome as categoria, Utente.nome as utente_nome, Utente.cognome as utente_cognome, Utente_id
+        FROM Annuncio
+        JOIN Categoria ON Annuncio.Categoria_id = Categoria.id
+        JOIN Utente ON Annuncio.Utente_id = Utente.id WHERE Utente.id = " . $_SESSION["login"];
+        $result = $conn->query($sql);
 
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()){
+        
+                echo "<div class='col d-flex justify-content-center'><div class='col-md-4 mb-4'>
+                    <div class='card'>";
+                
+        
+                $sql_images = "SELECT url FROM Foto WHERE Annuncio_id = " . $row["id"];
+                $result_images = $conn->query($sql_images);
+                $num_images = $result_images->num_rows;
+        
+                if ($num_images > 1) {
+        
+                    echo "<div id='carousel" . $row["id"] . "' class='carousel slide'>
+                            <div class='carousel-inner'>";
+        
+                    $first = true;
+                    while ($row_image = $result_images->fetch_assoc()) {
+                        echo "<div class='carousel-item " . ($first ? 'active' : '') . "'>
+                                <img src='../addannuncio/" . $row_image['url'] . "' class='d-block w-100' alt='...'>
+                            </div>";
+                        $first = false;
+                    }
+        
+                    echo "  </div>
+                            <button class='carousel-control-prev' type='button' data-bs-target='#carousel" . $row["id"] . "' data-bs-slide='prev'>
+                                <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+                                <span class='visually-hidden'>Previous</span>
+                            </button>
+                            <button class='carousel-control-next' type='button' data-bs-target='#carousel" . $row["id"] . "' data-bs-slide='next'>
+                                <span class='carousel-control-next-icon' aria-hidden='true'></span>
+                                <span class='visually-hidden'>Next</span>
+                            </button>
+                        </div>";
+                } else {
+        
+                    $row_image = $result_images->fetch_assoc();
+                    $image_url = $row_image ? '../addannuncio/' . $row_image['url'] : '../addannuncio/uploads/placeholder.png';
+                    echo "<img src='$image_url' class='d-block w-100' alt='...'>";
+                }
+        
+                echo "  <div class='card-body'>
+                            <h5 class='card-title'>" . $row['titolo'] . "</h5>
+                            <h6 class='card-subtitle mb-2 text-muted'>Categoria: " . $row['categoria'] . "</h6>
+                            <p class='card-text'>" . $row['descrizione'] . "</p>
+                            <p class='card-text'><small class='text-muted'>Postato da: " . $row['utente_nome'] . " " . $row['utente_cognome'] . "</small></p>
+                            <div class='d-flex justify-content-center gap-5'>
+                                <a href='../addproposta/aggiungiProposta.php?id=" . $row["id"] . "'><button class='btn btn-outline-success'>Visualizza proposte</button></a>
+                                <button class='btn btn-outline-danger'>Elimina annuncio</button>
+                            </div>
+                        </div>
+                    </div>
+                </div></div>";
+
+        }} else {
+            echo "<p>Nessun annuncio trovato.</p>";
+        }
+        ?>
+    </div>    
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
