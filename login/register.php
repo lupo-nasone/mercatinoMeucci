@@ -18,8 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["regMSG_good"] = true;
         header("Location: registerPage.php");
     } else {
-        $_SESSION["regMSG"] = "Errore durante la registrazione: " . $conn->error;
+        if($conn->error == "Duplicate entry '$email' for key 'email'"){
+            $_SESSION["regMSG"] = "Esiste già un account con quella mail";
+        }else{
+            $_SESSION["regMSG"] = "Errore durante la registrazione: " . $conn->error;
+        }
         $_SESSION["regMSG_good"] = false;
+        header("Location: registerPage.php");
     }
 }
 else{

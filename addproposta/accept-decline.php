@@ -1,12 +1,13 @@
 <?php
 require "../lib/connection.php";
 session_start();
+$status = $_POST["status"];
+$id = $_POST["id"];
+$annuncio_id = $_POST["annuncio_id"];
 
 if(isset($_SESSION["login"]) && $_SERVER["REQUEST_METHOD"] == "POST"){
 
-    $status = $_POST["status"];
-    $id = $_POST["id"];
-    $annuncio_id = $_POST["annuncio_id"];
+    
     var_dump($id);
 
     $sql = "UPDATE Proposta SET accepted = $status WHERE Proposta.id = $id";
@@ -24,12 +25,10 @@ if(isset($_SESSION["login"]) && $_SERVER["REQUEST_METHOD"] == "POST"){
         $result = $conn->query($sql);
         }
         
-    }else{
-        echo "fuck";
     }
-}else{
-    echo '<script>window.location="./aggiungiAnnuncio.php"</script>';
 }
+echo "<script>window.location='./aggiungiProposta.php?id=$annuncio_id'</script>";
+
 
 
 

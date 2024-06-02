@@ -15,7 +15,7 @@ if ($categoria_filtrata > 0) {
                 	WHERE Proposta.accepted = 1
             )";
 } else {
-    $sql = "SELECT Annuncio.id, Annuncio.titolo, Annuncio.descrizione, Categoria.nome as categoria, Utente.nome as utente_nome, Utente.cognome as utente_cognome
+    $sql = "SELECT Annuncio.id, Annuncio.titolo, Annuncio.descrizione, Categoria.nome as categoria, Utente.nome as utente_nome, Utente.cognome as utente_cognome, Utente.id as utente_id
             FROM Annuncio
             JOIN Categoria ON Annuncio.Categoria_id = Categoria.id
             JOIN Utente ON Annuncio.Utente_id = Utente.id
@@ -78,7 +78,12 @@ if ($result->num_rows > 0) {
                     <h5 class='card-title'>" . htmlspecialchars($row['titolo']) . "</h5>
                     <h6 class='card-subtitle mb-2 text-muted'>Categoria: " . htmlspecialchars($row['categoria']) . "</h6>
                     <p class='card-text'>" . htmlspecialchars($row['descrizione']) . "</p>
-                    <p class='card-text'><small class='text-muted'>Postato da: " . htmlspecialchars($row['utente_nome']) . " " . htmlspecialchars($row['utente_cognome']) . "</small></p>
+                    <p class='card-text'>
+                        <small class='text-muted'>
+                            Postato da: 
+                                <a href='./profile/profile.php?id=" . $row["utente_id"] . "'>" . htmlspecialchars($row['utente_nome']) . " " . htmlspecialchars($row['utente_cognome']) . "</a>
+                        </small>
+                    </p>
                 </div>
                 <div class='d-flex justify-content-center pb-2'>
                     <a href='./addproposta/aggiungiProposta.php?id=" . $row["id"] . "'>
