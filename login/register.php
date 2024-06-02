@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["regMSG_good"] = true;
         header("Location: registerPage.php");
     } else {
-        if($conn->error == "Duplicate entry '$email' for key 'email'"){
+        if($conn->error == "Duplicate entry '$email' for key 'Utente.email'"){
             $_SESSION["regMSG"] = "Esiste già un account con quella mail";
         }else{
             $_SESSION["regMSG"] = "Errore durante la registrazione: " . $conn->error;

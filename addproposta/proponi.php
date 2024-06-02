@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $conn->query($sql);
 
     if(!$result){
-        if($conn->error == "Duplicate entry '$annuncio_id-$utente_id' for key 'Annuncio_id'"){
+        if($conn->error == "Duplicate entry '$annuncio_id-$utente_id' for key 'Proposta.Annuncio_id'"){
             $_SESSION["MSG"] = "Errore: Non puoi fare più proposte sullo stesso annuncio!";
         }else{
             $_SESSION["MSG"] = "Errore: " . $conn->error;
