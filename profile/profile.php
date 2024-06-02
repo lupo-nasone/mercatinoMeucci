@@ -1,9 +1,18 @@
 <?php 
-require "../lib/connection.php";
-session_start();
-if (!isset($_SESSION["login"])) {
-    header("Location: index.php");
-}
+    require "../lib/connection.php";
+    session_start();
+
+
+    if(isset($_GET["id"]) && $_GET["id"] == $_SESSION["login"]){
+        header("Location: ./profile.php");
+    }
+    $utente_id = isset($_GET["id"]) ? (is_numeric($_GET["id"]) ? $_GET["id"] : $_SESSION["login"]) : $_SESSION["login"];
+
+    if(!isset($_SESSION["login"])){
+        header("Location: ../index.php");
+    }
+    $sql = "SELECT * FROM Utente WHERE Utente.id = $utente_id";
+    $result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -34,11 +43,13 @@ if (!isset($_SESSION["login"])) {
     </div>
 </nav>
 
+<?php if($result->num_rows > 0):?>
+
 <p class="fs-2 mt-4 text-center">Dati Utente</p>
 <hr>
 <div class="d-flex flex-column text-center">
     <?php 
-        $sql = "SELECT * FROM Utente WHERE Utente.id = " . $_SESSION["login"];
+        $sql = "SELECT * FROM Utente WHERE Utente.id = $utente_id";
         $result = $conn->query($sql);
         if(!$result){
             echo "utente non valido";
@@ -52,6 +63,7 @@ if (!isset($_SESSION["login"])) {
 
         }
     ?>
+    <?php if ($utente_id == $_SESSION["login"]):?>
     <div class="d-flex justify-content-center">
         <a href="../login/logout.php">
             <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">
@@ -59,6 +71,7 @@ if (!isset($_SESSION["login"])) {
             </button>
         </a>
     </div>
+    <?php endif?>
 </div>
 <hr>
 <div class="d-flex justify-content-center">
@@ -84,7 +97,7 @@ if (!isset($_SESSION["login"])) {
     $sql = "SELECT Annuncio.id, Annuncio.titolo, Annuncio.descrizione, Categoria.nome as categoria, Utente.nome as utente_nome, Utente.cognome as utente_cognome, Utente_id
     FROM Annuncio
     JOIN Categoria ON Annuncio.Categoria_id = Categoria.id
-    JOIN Utente ON Annuncio.Utente_id = Utente.id WHERE Utente.id = " . $_SESSION["login"];
+    JOIN Utente ON Annuncio.Utente_id = Utente.id WHERE Utente.id = " . $utente_id;
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -134,11 +147,17 @@ if (!isset($_SESSION["login"])) {
                         <p class='card-text'>" . $row['descrizione'] . "</p>
                         <p class='card-text'><small class='text-muted'>Postato da: " . $row['utente_nome'] . " " . $row['utente_cognome'] . "</small></p>
                         <div class='d-flex justify-content-center gap-5'>
-                            <a href='../addproposta/aggiungiProposta.php?id=" . $row["id"] . "'><button class='btn btn-outline-success'>Visualizza proposte</button></a>
-                            <form method='POST' action='../addannuncio/elimina.php'>
-                                <input type='hidden' name='id' value='" . $row["id"]. "'>
-                                <button class='btn btn-outline-danger'>Elimina annuncio</button>
-                            </form>
+                            <a href='../addproposta/aggiungiProposta.php?id=" . $row["id"] . "'><button class='btn btn-outline-success'>Visualizza proposte</button></a>";
+                            if($utente_id == $_SESSION["login"]){
+                                echo "
+                                    <form method='POST' action='../addannuncio/elimina.php'>
+                                        <input type='hidden' name='id' value='" . $row["id"]. "'>
+                                        <button class='btn btn-outline-danger'>Elimina annuncio</button>
+                                    </form>";
+                            }
+                            
+
+                        echo "    
                         </div>
                     </div>
                 </div>
@@ -150,11 +169,56 @@ if (!isset($_SESSION["login"])) {
 </div>    
 
 <div id="proposte" class="d-none">
-    <p class="text-center">qui vanno le proposte</p>
+    <div class="container text-center pb-5">
+            <div class="row row-cols-1">
+                <?php 
+                
+                    $sql = "SELECT Proposta.prezzo as prezzo, Proposta.created_at as created_at, Proposta.accepted as accepted, Proposta.Annuncio_id as annuncio_id, Utente.nome as nome, Utente.cognome as cognome 
+                    FROM Proposta JOIN Utente ON Proposta.Utente_id = Utente.id WHERE Proposta.Utente_id = $utente_id ORDER BY created_at DESC";
+                    
+                    $result = $conn->query($sql);
+                    
+                    if(!$result){
+                        echo "errore query";
+                    }else if($result->num_rows > 0){
+                        while($row = $result->fetch_assoc()){
+                            $stato = $row["accepted"];
+                            $msg = "<span class='text-red'>invalid state error<span>";
+                            if($stato == 0){
+                                $msg = "<span>in attesa</span>";
+                            }else if($stato == 1){
+                                $msg = "<span class='text-success'>accettata</span>";
+                            }
+                            else if($stato == 2){
+                                $msg = "<span class='text-danger'>rifiutata</span>";
+                            }
+
+                            echo "<div class='col p-1 d-flex justify-content-center'>
+                            <div class='card' style='width: 18rem;'>
+                                <div class='card-body'>
+                                    <h5 class='card-title'>€ " . $row["prezzo"] . "</h5>
+                                    <h6 class='card-subtitle mb-2 text-body-secondary'>" . $row["created_at"] . "</h6>
+                                    <p class='card-text'>Stato: $msg</p>
+
+                                    <a href='../addproposta/aggiungiProposta.php?id=". $row["annuncio_id"] ."'>
+                                        <button class='btn btn-outline-info'>Visualizza annuncio</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div> ";
+                        }
+                    }else{
+                        echo "<p class='text-center'>Nessuna proposta trovata.</p>";
+                    }
+                
+                ?>
+            </div>
+        </div>
 </div>
     
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <?php endif?>
 </body>
 </html>
 

@@ -2,7 +2,7 @@
     require("../lib/connection.php");
     session_start();
     $annuncio_id = isset($_GET["id"]) ? (is_numeric($_GET["id"]) ? $_GET["id"] : -1) : -1;
-    if(!isset($_SESSION["login"]) || $annuncio_id < 1){
+    if(!isset($_SESSION["login"]) || $annuncio_id < 0){
         header("Location: ../index.php");
     }
 
@@ -101,14 +101,24 @@
                     </div>";
 
             }else{
-            echo "  <div class='d-flex justify-content-center pb-2 my-2'>
-                        <form method='POST' action='./proponi.php' class='text-center'>
-                            <input type='number' step='.01' min='0.01' name='proposta' placeholder='inserisci prezzo'>
-                            <input type='hidden' name='annuncio_id' value='$annuncio_id'>
-                            <br><br>
-                            <input type='submit' class='btn btn-outline-success'>
-                        </form>
-                    </div>
+                $sql = "SELECT * FROM Annuncio 
+                        JOIN Proposta ON Annuncio.id = Proposta.Annuncio_id 
+                        WHERE Annuncio.id = $annuncio_id AND Proposta.accepted = 1";
+                $result = $conn->query($sql);
+                if($result->num_rows > 0){
+                    echo "<p class='text-danger text-center'>Una proposta è già stata accettata su questo annuncio</p>";
+                }else{
+                    echo "  <div class='d-flex justify-content-center pb-2 my-2'>
+                    <form method='POST' action='./proponi.php' class='text-center'>
+                        <input type='number' step='.01' min='0.01' name='proposta' placeholder='inserisci prezzo' required>
+                        <input type='hidden' name='annuncio_id' value='$annuncio_id'>
+                        <br><br>
+                        <input type='submit' class='btn btn-outline-success'>
+                    </form>
+                </div>";
+                }
+            
+                echo "
                 </div>
             </div>
             </div>
@@ -135,12 +145,29 @@
         <div class="container text-center pb-5">
             <div class="row row-cols-1">
                 <?php 
-                
-                    $sql = "SELECT Proposta.prezzo as prezzo, Proposta.created_at as created_at, Utente.nome as nome, Utente.cognome as cognome 
-                    FROM Proposta JOIN Utente ON Proposta.Utente_id = Utente.id WHERE Proposta.Annuncio_id = $annuncio_id ORDER BY created_at DESC";
+                    $hasAccepted = false;
+                    $sql = "SELECT Proposta.id FROM Proposta
+                    JOIN Annuncio ON Annuncio.id = Proposta.Annuncio_id
+                    WHERE Annuncio.id = $annuncio_id
+                    AND Proposta.accepted = 1";
+                    $result = $conn->query($sql);
+                    if($result){
+                        if($result->num_rows > 0 ){
+                            $hasAccepted = true;
+                        }
+                    }
+
+                    $sql = "SELECT Proposta.prezzo as prezzo, Proposta.created_at as created_at, Proposta.id as id, Utente.nome as nome, Utente.cognome as cognome 
+                        FROM Proposta 
+                        JOIN Utente ON Proposta.Utente_id = Utente.id 
+                        WHERE Proposta.Annuncio_id = $annuncio_id 
+                        AND Proposta.id NOT IN(
+                            SELECT Proposta.id FROM Proposta
+                            WHERE Proposta.accepted = 2
+                        )
+                        ORDER BY created_at DESC";
                     
                     $result = $conn->query($sql);
-                    
                     if(!$result){
                         echo "errore query";
                     }else if($result->num_rows > 0){
@@ -150,7 +177,29 @@
                                 <div class='card-body'>
                                     <h5 class='card-title'>€ " . $row["prezzo"] . "</h5>
                                     <h6 class='card-subtitle mb-2 text-body-secondary'>" . $row["created_at"] . "</h6>
-                                    <p class='card-text'>da: " . $row["nome"] . " " . $row["cognome"] . "</p>
+                                    <p class='card-text'>da: " . $row["nome"] . " " . $row["cognome"] . "</p>";
+                                    if($hasAccepted){
+                                        echo "<p class='text-success'>Proposta Accettata</p>";
+                                    }
+                                    else if($creatore_annuncio == $_SESSION["login"]){
+                                        
+                                        echo "
+                                            <div class='d-flex justify-content-center gap-5'>
+                                            <form method='POST' action='./accept-decline.php'>
+                                                <input type='hidden' name='status' value='1'>
+                                                <input type='hidden' name='id' value='". $row["id"] ."'>
+                                                <input type='hidden' name='annuncio_id' value='$annuncio_id'>
+                                                <button class='btn btn-outline-success'>accetta</button>
+                                            </form>
+                                            <form method='POST' action='./accept-decline.php'>
+                                                <input type='hidden' name='status' value='2'>
+                                                <input type='hidden' name='id' value='". $row["id"] ."'>
+                                                <input type='hidden' name='annuncio_id' value='$annuncio_id'>
+                                                <button class='btn btn-outline-danger'>rifiuta</button>
+                                            </form>
+                                            </div>";
+                                    }
+                                echo "
                                 </div>
                             </div>
                         </div> ";

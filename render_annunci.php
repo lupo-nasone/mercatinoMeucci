@@ -8,12 +8,22 @@ if ($categoria_filtrata > 0) {
             FROM Annuncio
             JOIN Categoria ON Annuncio.Categoria_id = Categoria.id
             JOIN Utente ON Annuncio.Utente_id = Utente.id
-            WHERE Categoria.id = $categoria_filtrata";
+            WHERE Categoria.id = $categoria_filtrata
+            AND Utente.id NOT IN (
+            	SELECT Utente.id FROM Utente
+                	JOIN Proposta ON Utente.id = Proposta.Utente_id
+                	WHERE Proposta.accepted = 1
+            )";
 } else {
     $sql = "SELECT Annuncio.id, Annuncio.titolo, Annuncio.descrizione, Categoria.nome as categoria, Utente.nome as utente_nome, Utente.cognome as utente_cognome
             FROM Annuncio
             JOIN Categoria ON Annuncio.Categoria_id = Categoria.id
-            JOIN Utente ON Annuncio.Utente_id = Utente.id";
+            JOIN Utente ON Annuncio.Utente_id = Utente.id
+            WHERE Annuncio.id NOT IN (
+            	SELECT Annuncio.id FROM Annuncio
+                	JOIN Proposta ON Annuncio.id = Proposta.Annuncio_id
+                	WHERE Proposta.accepted = 1
+            )";
 }
 
 $result = $conn->query($sql);
